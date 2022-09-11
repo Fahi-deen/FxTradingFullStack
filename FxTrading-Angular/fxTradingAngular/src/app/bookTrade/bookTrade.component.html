@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>Form</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+
+  <body>
+    <!-- Body of Form starts -->
+    <!-- method="post" autocomplete="on" -->
+    <div class="container">
+      <form (ngSubmit)="onConfirmBook()">
+        <!--First name-->
+        <div class="box">
+          <label for="CustomerName" class="fl fontLabel"> CustomerName: </label>
+          <div class="new iconBox">
+            <i class="fa fa-user" aria-hidden="true"></i>
+          </div>
+          <div class="fr">
+            <input type="text" name="customerName" placeholder="Enter customer Name" class="textBox" autofocus="on"
+              [(ngModel)]="data.customerName" required>
+          </div>
+          <div class="clr"></div>
+        </div>
+        <!--First name-->
+
+
+        <!--Second name-->
+        <div class="box">
+          <label for="CurrencyPairs" class="fl fontLabel">CurrencyPairs: </label>
+          <div class="fl iconBox"><i class="fa fa-user" aria-hidden="true"></i></div>
+          <div class="fr">
+            <input type="text" name="currencyPair" placeholder="Enter currency pairs" class="textBox" autofocus="on"
+              [(ngModel)]="data.currencyPair" required>
+          </div>
+          <div class="clr"></div>
+        </div>
+        <!--Second name-->
+
+        <div class="box">
+          <label for="Amount" class="fl fontLabel"> Amount: </label>
+          <div class="new iconBox">
+            <i class="fa fa-user" aria-hidden="true"></i>
+          </div>
+          <div class="fr">
+            <input type="number " name="amount" placeholder="Enter amount to transfer" class="textBox" autofocus="on"
+              min="1" [(ngModel)]="data.amount" required>
+          </div>
+          <div class="clr"></div>
+        </div>
+
+        <!---Submit Button------>
+        <div class="box" style="background: #2d3e3f">
+          <input type="Submit" name="Submit" class="submit" value="SUBMIT">
+        </div>
+        <!---Submit Button----->
+
+      </form>
+      <div class="bottom-options" style="background: #2d3e3f">
+        <button id="cancel" (click)="onPrint()">Click here to see Rate</button>
+        <button id="cancel" (click)="onCancelledTrade()">Cancel Trade</button>
+        <button id="cancel" (click)="onConfirmedTrade()">Confirm Trade</button>
+      </div>
+
+      <p class="bottom-text">{{displayMsg}}</p>
+    </div>
+    <!--Body of Form ends--->
+  </body>
+
+  </html>
+
+</body>
+
+</html>
