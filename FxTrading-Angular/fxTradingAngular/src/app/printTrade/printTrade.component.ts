@@ -13,7 +13,7 @@ export class PrintTradeComponent implements OnInit {
 
   ngOnInit() :void {
     this.printService.printTrade().subscribe((data: TradingData[]) => {
-      console.log(data);
+      // console.log(data);
       this.datas= data;
     });
   }

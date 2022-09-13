@@ -1,13 +1,14 @@
 package com.springboot.fxTrading.service;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import com.springboot.fxTrading.model.TradingDataModel;
 
 public interface TradeService {
-	String bookTrade(TradingDataModel data);
-	
+	LinkedHashMap<String, String> homepage();
+
+	LinkedHashMap<String, Object> bookTrade(TradingDataModel data);
 
 	List<TradingDataModel> printTrade();
 
@@ -22,11 +23,9 @@ public interface TradeService {
 	void CurrencypairChecker();
 
 	String displayAmount();
-	
-	String homepage();
-	
-	HashMap<String,Object> bookTrades(TradingDataModel data);
-	 String confirmTrades(Long id);
-	 String cancelTrades(Long id);
-	
+
+	String confirmTrades(Long id);
+
+	String cancelTrades(Long id);
+
 }

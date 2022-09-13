@@ -1,9 +1,9 @@
 package com.springboot.fxTrading.serviceImpl;
 
-import java.text.DecimalFormat;
-import java.util.HashMap;
+import java.text.NumberFormat;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Optional;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,34 +16,24 @@ import com.springboot.fxTrading.service.TradeService;
 public class BookTradeServiceImpl implements TradeService {
 	@Autowired
 	private TradingDataRepository tradingDataRepository;
-    private TradingDataModel data;
+	private TradingDataModel data;
+
 	@Override
-	public String bookTrade(TradingDataModel data){
-		this.data = data;
-		amountCalculator();
-		CurrencypairChecker();
-		tradingDataRepository.save(data);
-		String displayText;
-		displayText = "Trade is processing,please confirm your trade\n"
-				+ "Do you want to get Rate click this link http://localhost:8082/printrate\n"
-				+ "To Book click this link http://localhost:8082/confirmtrade\n"
-				+ "To Cancel click this link http://localhost:8082/canceltrade";
-		return displayText;
-	}
-	@Override
-	public HashMap<String,Object> bookTrades(TradingDataModel data){
+	public LinkedHashMap<String, Object> bookTrade(TradingDataModel data) {
 		this.data = data;
 		amountCalculator();
 		CurrencypairChecker();
 		TradingDataModel model = tradingDataRepository.save(data);
-		String displayText;
-		displayText = "Trade is processing,please confirm your trade   "
-				+ "Do you want to get Rate click this link http://localhost:8082/printrate   "
-				+ "To Book click this link http://localhost:8082/confirmtrade   "
-				+ "To Cancel click this link http://localhost:8082/canceltrade   ";
-		 HashMap<String, Object> map = new HashMap<>();
-		 map.put("trade",model);
-		 map.put("details", displayText);
+		String printRate, bookTrade, CancelTrade;
+		printRate = "http://localhost:8082/printrate";
+		bookTrade = "http://localhost:8082/confirmtrade";
+		CancelTrade = "http://localhost:8082/canceltrade";
+
+		LinkedHashMap<String, Object> map = new LinkedHashMap<>();
+		map.put("trade", model);
+		map.put("Print Rate click here", printRate);
+		map.put("Book Trade Click here", bookTrade);
+		map.put("Cancel Trade Click here", CancelTrade);
 		return map;
 	}
 
@@ -61,8 +51,6 @@ public class BookTradeServiceImpl implements TradeService {
 				+ data.getCustomerName() + "..";
 		return msg;
 	}
-
-
 
 	@Override
 	public String cancelTrade() {
@@ -93,31 +81,36 @@ public class BookTradeServiceImpl implements TradeService {
 		if (data.getCurrencyPair().toUpperCase().equals("USDINR")) {
 			data.setCurrencyPair("USDINR");
 		} else {
-		 
+
 			throw new IllegalArgumentException(data.getCurrencyPair() + " is not allowed Only USDINR is allowed");
 		}
 	}
 
-
-
 	@Override
 	public String displayAmount() {
-		DecimalFormat df = new DecimalFormat("###,###,###");
-		String displayAmount = df.format(data.getAmount()).trim();	
+		NumberFormat nf = NumberFormat.getInstance(new Locale("en", "IN"));
+		String displayAmount = nf.format(data.getAmount()).trim();
 		return displayAmount;
 	}
 
 	@Override
-	public String homepage() {
-		String msg="To book Trade clik this link http://localhost:8082/booktrade\n"
-    			+ "To Print Trade click this link http://localhost:8082/printtrade\n"
-    			+ "To Exit click this link http://localhost:8082/exit\n";
-		return msg;
+	public LinkedHashMap<String, String> homepage() {
+
+		String bookTrade, printTrade, exitTrade;
+		bookTrade = "http://localhost:8082/booktrade";
+		printTrade = "http://localhost:8082/printtrade";
+		exitTrade = "link http://localhost:8082/exit";
+		LinkedHashMap<String, String> map = new LinkedHashMap<>();
+		map.put("To Book Trade click here", bookTrade);
+		map.put("To Print Trade click here", printTrade);
+		map.put("To exit click here", exitTrade);
+
+		return map;
 	}
 
 	@Override
 	public String confirmTrades(Long id) {
-	     TradingDataModel trade = tradingDataRepository.findById(id).get();
+		TradingDataModel trade = tradingDataRepository.findById(id).get();
 		trade.setStatus("Booked");
 		TradingDataModel datas = tradingDataRepository.save(trade);
 		String msg = "Trade for " + datas.getCurrencyPair() + " has been booked with rate " + datas.getRate() + " , "
@@ -126,13 +119,12 @@ public class BookTradeServiceImpl implements TradeService {
 		return msg;
 
 	}
-	
+
 	@Override
 	public String cancelTrades(Long id) {
-		 TradingDataModel trade = tradingDataRepository.findById(id).get();
+		TradingDataModel trade = tradingDataRepository.findById(id).get();
 		tradingDataRepository.delete(trade);
 		return "Trade is Canceled..";
 	}
-
 
 }

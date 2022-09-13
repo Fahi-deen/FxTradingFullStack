@@ -12,7 +12,7 @@ export class ConfirmBookingService {
 constructor(private httpClient:HttpClient) { }
   onSubmitBook(data:TradingData):Observable<Object>{
      console.log(data);
-     const res =  this.httpClient.post(`${this.baseUrl}booktrades`,data);
+     const res =  this.httpClient.post(`${this.baseUrl}booktrade`,data);
      console.log(res)
       return res;
   }

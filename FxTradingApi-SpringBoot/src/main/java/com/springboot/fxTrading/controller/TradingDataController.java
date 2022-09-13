@@ -1,8 +1,7 @@
 package com.springboot.fxTrading.controller;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,27 +23,24 @@ import com.springboot.fxTrading.service.TradeService;
 public class TradingDataController {
 	@Autowired
 	private TradeService tradeService;
-    @GetMapping("/index")
-    public String homePage() {
-    	
-    	return tradeService.homepage();
-    }
-	@PostMapping("/booktrade")
-	public ResponseEntity<String> bookTrade(@RequestBody TradingDataModel data){
-		
-		return new ResponseEntity<String>(tradeService.bookTrade(data), HttpStatus.ACCEPTED);
+
+	@GetMapping("/index")
+	public LinkedHashMap<String, String> homePage() {
+
+		return tradeService.homepage();
 	}
-	
-	@PostMapping("/booktrades")
-	public ResponseEntity<HashMap<String,Object>> bookTrades(@RequestBody TradingDataModel data){
-		
-		return new ResponseEntity<HashMap<String,Object>>(tradeService.bookTrades(data), HttpStatus.ACCEPTED);
+
+	@PostMapping("/booktrade")
+	public ResponseEntity<LinkedHashMap<String, Object>> bookTrades(@RequestBody TradingDataModel data) {
+
+		return new ResponseEntity<LinkedHashMap<String, Object>>(tradeService.bookTrade(data), HttpStatus.ACCEPTED);
 	}
 
 	@PutMapping("/confirmtrade")
 	public ResponseEntity<String> confirmTrade(TradingDataModel data) {
 		return new ResponseEntity<String>(tradeService.confirmTrade(), HttpStatus.OK);
 	}
+
 	@PutMapping("/confirmtrades")
 	public ResponseEntity<String> confirmTrades(@RequestBody UpdateStatus data) {
 		return new ResponseEntity<String>(tradeService.confirmTrades(data.id), HttpStatus.OK);
@@ -54,7 +50,7 @@ public class TradingDataController {
 	public ResponseEntity<String> cancelTrade(TradingDataModel data) {
 		return new ResponseEntity<String>(tradeService.cancelTrade(), HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/canceltrades")
 	public ResponseEntity<String> cancelTrades(@RequestParam(name = "id") Long id) {
 		return new ResponseEntity<String>(tradeService.cancelTrades(id), HttpStatus.OK);
@@ -70,12 +66,14 @@ public class TradingDataController {
 	public String printRate(TradingDataModel data) {
 		return tradeService.getRate();
 	}
+
 	@GetMapping("/exit")
 	public String exitTrade() {
 		return "Bye - have a good day\n";
 	}
 
 }
-class UpdateStatus{
-	 public Long id;
+
+class UpdateStatus {
+	public Long id;
 }
