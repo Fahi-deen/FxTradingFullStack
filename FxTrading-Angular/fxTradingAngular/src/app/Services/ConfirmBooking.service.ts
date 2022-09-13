@@ -17,8 +17,8 @@ constructor(private httpClient:HttpClient) { }
       return res;
   }
   onConfirmTrade(id : number):Observable<Object>{
-    console.log({ id : id })
-    const res =  this.httpClient.put(`${this.baseUrl}confirmtrades`, { id : id })
+
+    const res =  this.httpClient.put(`${this.baseUrl}confirmtrade`, { tradeNo : id })
     console.log(res)
      return res;
   }

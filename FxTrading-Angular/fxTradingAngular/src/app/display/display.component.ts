@@ -19,6 +19,8 @@ export class DisplayComponent implements OnInit {
 onPrint(){
   this.printService.printTrade().subscribe((data: TradingData[]) => {
     this.datas= data;
+    console.log("inside print")
+    console.log(data);
   });
   this.router.navigateByUrl("/printtrade");
 }

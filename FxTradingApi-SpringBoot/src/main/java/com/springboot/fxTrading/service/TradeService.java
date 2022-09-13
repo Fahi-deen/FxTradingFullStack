@@ -3,6 +3,8 @@ package com.springboot.fxTrading.service;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.springframework.boot.configurationprocessor.json.JSONObject;
+
 import com.springboot.fxTrading.model.TradingDataModel;
 
 public interface TradeService {
@@ -22,8 +24,8 @@ public interface TradeService {
 
 	String displayAmount();
 
-	String confirmTrade(Long id);
+	LinkedHashMap<String, Object> confirmTrade(Long id);
 
-	String cancelTrades(Long id);
+	LinkedHashMap<String,Object> cancelTrades(Long id);
 
 }

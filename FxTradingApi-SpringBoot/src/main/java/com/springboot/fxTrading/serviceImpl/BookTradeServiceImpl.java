@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.springboot.fxTrading.model.TradingDataModel;
@@ -101,7 +102,7 @@ public class BookTradeServiceImpl implements TradeService {
 	}
 
 	@Override
-	public String confirmTrade(Long id) {
+	public LinkedHashMap<String, Object> confirmTrade(Long id) {
 		TradingDataModel trade = tradingDataRepository.findById(id).get();
 		trade.setStatus("Booked");
 		TradingDataModel datas = tradingDataRepository.save(trade);
@@ -109,16 +110,23 @@ public class BookTradeServiceImpl implements TradeService {
 		String displayAmount = nf.format(trade.getAmount()).trim();
 		String msg = "Trade for " + datas.getCurrencyPair() + " has been booked with rate " + datas.getRate() + " , "
 				+ "The amount of Rs " + displayAmount + " will  be transferred in 2 working days to "
-				+ datas.getCustomerName() + "..";
-		return msg;
+				+ datas.getCustomerName() ;
+		LinkedHashMap<String, Object> map=new LinkedHashMap<>();
+		map.put("trade_detail", trade);
+		map.put("msg", msg);
+		return map;
 
 	}
 
 	@Override
-	public String cancelTrades(Long id) {
+	public LinkedHashMap<String,Object> cancelTrades(Long id) {
 		TradingDataModel trade = tradingDataRepository.findById(id).get();
+		trade.setStatus("Cancelled");
 		tradingDataRepository.delete(trade);
-		return "Trade is Canceled..";
+		LinkedHashMap<String,Object> map=new LinkedHashMap<>();
+	    map.put("details", trade);
+        map.put("msg", "Trade is Cancelled");
+		return map;
 	}
 
 }

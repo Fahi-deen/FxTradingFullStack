@@ -11,9 +11,9 @@ const routes: Routes = [
     {path:"printtrade",component:PrintTradeComponent},
     {path:"bookTrade",component:BookTradeComponent},
     {path:"exitTrade",component:ExitComponent},
+    {path:"display",component:DisplayComponent},
     {path:'',component:DisplayComponent},
     {path:'**',component:DisplayComponent,pathMatch:'full'},
-    {path:"display",component:DisplayComponent},
 
 
 ];

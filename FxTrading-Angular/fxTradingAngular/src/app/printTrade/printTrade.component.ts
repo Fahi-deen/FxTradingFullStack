@@ -5,18 +5,15 @@ import { PrintServiceService } from '../Services/printService.service';
 @Component({
   selector: 'app-printTrade',
   templateUrl: './printTrade.component.html',
-  styleUrls: ['./printTrade.component.css']
+  styleUrls: ['./printTrade.component.css'],
 })
 export class PrintTradeComponent implements OnInit {
-   datas:TradingData[]|undefined;
-  constructor(private printService:PrintServiceService) { }
+  datas!: TradingData[];
+  constructor(private printService: PrintServiceService) {}
 
-  ngOnInit() :void {
+  ngOnInit(): void {
     this.printService.printTrade().subscribe((data: TradingData[]) => {
-      // console.log(data);
-      this.datas= data;
+      this.datas = data;
     });
   }
-
-
 }

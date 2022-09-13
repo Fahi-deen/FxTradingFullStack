@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.fxTrading.model.TradingDataModel;
-import com.springboot.fxTrading.model.UpdateStatus;
 import com.springboot.fxTrading.service.TradeService;
 
 @RestController("/api")
@@ -39,9 +38,10 @@ public class TradingDataController {
 
 	
 
+
 	@PutMapping("/confirmtrade")
-	public ResponseEntity<String> confirmTrades(@RequestBody UpdateStatus data) {
-		return new ResponseEntity<String>(tradeService.confirmTrade(data.tradeNo), HttpStatus.OK);
+	public ResponseEntity<LinkedHashMap<String, Object>> confirmTrades(@RequestBody TradingDataModel data) {
+		return new ResponseEntity<LinkedHashMap<String, Object>>(tradeService.confirmTrade(data.getTradeNo()), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/canceltrade")
@@ -50,8 +50,9 @@ public class TradingDataController {
 	}
 
 	@DeleteMapping("/canceltrades")
-	public ResponseEntity<String> cancelTrades(@RequestParam(name = "id") Long id) {
-		return new ResponseEntity<String>(tradeService.cancelTrades(id), HttpStatus.OK);
+	public ResponseEntity<LinkedHashMap<String,Object>> cancelTrades(@RequestParam(value = "id") Long id) {
+		
+		return new ResponseEntity<>(tradeService.cancelTrades(id), HttpStatus.OK);
 	}
 
 	@GetMapping("/printtrade")
@@ -72,6 +73,4 @@ public class TradingDataController {
 
 }
 
-class UpdateStatus1 {
-	public Long id;
-}
+

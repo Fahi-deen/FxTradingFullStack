@@ -1,9 +1,9 @@
 export class TradingData {
-   tradeNo: number|undefined;
-	  customerName: String|undefined;
-	 currencyPair: String|undefined;
-	  amount: number|undefined;
-	  rate: number|undefined;
-	  status: String|undefined;
- 
+   tradeNo!: number;
+	  customerName!: String;
+	 currencyPair!: String;
+	  amount!: number;
+	  rate!: number;
+	  status!: String;
+
 }
