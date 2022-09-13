@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.fxTrading.model.TradingDataModel;
+import com.springboot.fxTrading.model.UpdateStatus;
 import com.springboot.fxTrading.service.TradeService;
 
 @RestController("/api")
@@ -74,6 +75,6 @@ public class TradingDataController {
 
 }
 
-class UpdateStatus {
+class UpdateStatus1 {
 	public Long id;
 }

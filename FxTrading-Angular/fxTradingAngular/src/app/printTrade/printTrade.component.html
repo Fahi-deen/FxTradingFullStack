@@ -21,6 +21,7 @@
             <th> currencyPair</th>
             <th> Amount </th>
             <th> Rate </th>
+            <!-- <th>Status</th> -->
           </thead>
           <tbody>
             <tr *ngFor="let data of datas ">
@@ -29,6 +30,7 @@
               <td> {{ data.currencyPair }}</td>
               <td> {{data.amount}}</td>
               <td> {{data.rate}}</td>
+              <!-- <td>{{data.status}}</td> -->
             </tr>
           </tbody>
         </table>
