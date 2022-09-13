@@ -14,8 +14,6 @@ public interface TradeService {
 
 	String getRate();
 
-	String confirmTrade();
-
 	String cancelTrade();
 
 	void amountCalculator();
@@ -24,7 +22,7 @@ public interface TradeService {
 
 	String displayAmount();
 
-	String confirmTrades(Long id);
+	String confirmTrade(Long id);
 
 	String cancelTrades(Long id);
 

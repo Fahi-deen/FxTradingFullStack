@@ -1,5 +1,5 @@
 package com.springboot.fxTrading.model;
 
 public class UpdateStatus {
-  public Long id;
+  public Long tradeNo;
 }

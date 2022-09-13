@@ -42,15 +42,7 @@ public class BookTradeServiceImpl implements TradeService {
 		return tradingDataRepository.findAll();
 	}
 
-	@Override
-	public String confirmTrade() {
-		data.setStatus("booked");
-		tradingDataRepository.save(data);
-		String msg = "Trade for " + data.getCurrencyPair() + " has been booked with rate " + data.getRate() + " , "
-				+ "The amount of Rs " + displayAmount() + " will  be transferred in 2 working days to "
-				+ data.getCustomerName() + "..";
-		return msg;
-	}
+	
 
 	@Override
 	public String cancelTrade() {
@@ -109,12 +101,14 @@ public class BookTradeServiceImpl implements TradeService {
 	}
 
 	@Override
-	public String confirmTrades(Long id) {
+	public String confirmTrade(Long id) {
 		TradingDataModel trade = tradingDataRepository.findById(id).get();
 		trade.setStatus("Booked");
 		TradingDataModel datas = tradingDataRepository.save(trade);
+		NumberFormat nf = NumberFormat.getInstance(new Locale("en", "IN"));
+		String displayAmount = nf.format(trade.getAmount()).trim();
 		String msg = "Trade for " + datas.getCurrencyPair() + " has been booked with rate " + datas.getRate() + " , "
-				+ "The amount of Rs " + displayAmount() + " will  be transferred in 2 working days to "
+				+ "The amount of Rs " + displayAmount + " will  be transferred in 2 working days to "
 				+ datas.getCustomerName() + "..";
 		return msg;
 

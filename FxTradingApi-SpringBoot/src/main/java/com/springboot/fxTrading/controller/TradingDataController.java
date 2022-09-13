@@ -37,14 +37,11 @@ public class TradingDataController {
 		return new ResponseEntity<LinkedHashMap<String, Object>>(tradeService.bookTrade(data), HttpStatus.ACCEPTED);
 	}
 
-	@PutMapping("/confirmtrade")
-	public ResponseEntity<String> confirmTrade(TradingDataModel data) {
-		return new ResponseEntity<String>(tradeService.confirmTrade(), HttpStatus.OK);
-	}
+	
 
-	@PutMapping("/confirmtrades")
+	@PutMapping("/confirmtrade")
 	public ResponseEntity<String> confirmTrades(@RequestBody UpdateStatus data) {
-		return new ResponseEntity<String>(tradeService.confirmTrades(data.id), HttpStatus.OK);
+		return new ResponseEntity<String>(tradeService.confirmTrade(data.tradeNo), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/canceltrade")
