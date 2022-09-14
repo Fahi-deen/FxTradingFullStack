@@ -27,7 +27,8 @@ export class BookTradeComponent implements OnInit {
 
   ngOnInit() {}
   onPrint() {
-    if (
+    if (this.data.amount <= 0) alert('Please Enter Postive value');
+    else if (
       this.data.amount !== undefined &&
       this.data.customerName !== undefined
     ) {
@@ -38,21 +39,22 @@ export class BookTradeComponent implements OnInit {
   }
 
   onConfirmBook() {
-    console.log(this.data.currencyPair);
-    this.data.currencyPair = this.data.currencyPair.toUpperCase();
-    if (this.data.currencyPair !== 'USDINR') {
+    if (this.data.currencyPair.toUpperCase() !== 'USDINR') {
       alert(`${this.data.currencyPair} is not valid only USDINR is supported`);
-    }
-    this.confirmBookingService.onSubmitBook(this.data).subscribe(
-      (data: any) => {
-        this.currentTradeId = data.trade.tradeNo;
+    } else if (this.data.amount <= 0) {
+      alert(`Cannot accept ${this.data.amount} Enter Postive value`);
+    } else {
+      this.confirmBookingService.onSubmitBook(this.data).subscribe(
+        (data: any) => {
+          this.currentTradeId = data.trade.tradeNo;
 
-        alert('sucess,please confirm your trade');
-        this.displayBtn = true;
-        this.isHidden = false;
-      },
-      (error) => alert('Cannot Book trade')
-    );
+          alert('sucess,please confirm your trade');
+          this.displayBtn = true;
+          this.isHidden = false;
+        },
+        (error) => alert('Cannot Book trade')
+      );
+    }
   }
 
   onConfirmedTrade() {
