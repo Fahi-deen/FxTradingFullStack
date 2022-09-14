@@ -22,7 +22,7 @@
     <!-- Body of Form starts -->
     <!-- method="post" autocomplete="on" -->
     <div class="container">
-      <form (ngSubmit)="onConfirmBook()">
+      <form (ngSubmit)="onConfirmBook()" ngNativeValidate>
         <!--First name-->
         <div class="box">
           <label for="CustomerName" class="fl fontLabel"> CustomerName: </label>
@@ -45,6 +45,9 @@
           <div class="fr">
             <input type="text" name="currencyPair" placeholder="Enter currency pairs" class="textBox" autofocus="on"
               [(ngModel)]="data.currencyPair" required>
+
+
+
           </div>
           <div class="clr"></div>
         </div>
@@ -62,20 +65,23 @@
           <div class="clr"></div>
         </div>
 
+
+        <p class="bottom-text">{{displayMsg}}</p>
+
         <!---Submit Button------>
-        <div class="box" style="background: #2d3e3f">
-          <input type="Submit" name="Submit" class="submit" value="SUBMIT">
+        <div class="box">
+          <input type="Submit" name="Submit" class="submit" value="SUBMIT" [hidden]="displayBtn">
         </div>
         <!---Submit Button----->
 
       </form>
-      <div class="bottom-options" style="background: #2d3e3f">
-        <button id="cancel" (click)="onPrint()">Click here to see Rate</button>
-        <button id="cancel" (click)="onCancelledTrade()   ">Cancel Trade</button>
-        <button id="cancel" (click)="onConfirmedTrade()">Confirm Trade</button>
+
+      <button id="print-btn" (click)="onPrint()" [hidden]="displayBtn">Get Rate</button>
+      <div class=" bottom-options">
+        <button (click)="onConfirmedTrade() " *ngIf="!isHidden">Confirm Trade</button>
+        <button (click)="onCancelledTrade() " *ngIf="!isHidden">Cancel Trade</button>
       </div>
 
-      <p class="bottom-text">{{displayMsg}}</p>
     </div>
     <!--Body of Form ends--->
   </body>

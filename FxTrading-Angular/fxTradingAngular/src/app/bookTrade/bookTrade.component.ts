@@ -15,7 +15,10 @@ export class BookTradeComponent implements OnInit {
   totalAmount = 0;
   current = 0;
   currentTradeId = -1;
+  isHidden = true;
+  displayBtn = false;
   id!: string;
+  selectedPair: string = '';
   constructor(
     private confirmBookingService: ConfirmBookingService,
     private printServiceService: PrintServiceService,
@@ -24,7 +27,10 @@ export class BookTradeComponent implements OnInit {
 
   ngOnInit() {}
   onPrint() {
-    if (this.data.amount !== NaN && this.data.customerName !== undefined) {
+    if (
+      this.data.amount !== undefined &&
+      this.data.customerName !== undefined
+    ) {
       this.totalAmount = this.data.amount * 66;
       this.displayMsg = `You are transferring INR ${this.totalAmount} to ${this.data.customerName}`;
     } else
@@ -32,10 +38,18 @@ export class BookTradeComponent implements OnInit {
   }
 
   onConfirmBook() {
+    console.log(this.data.currencyPair);
+    this.data.currencyPair = this.data.currencyPair.toUpperCase();
+    if (this.data.currencyPair !== 'USDINR') {
+      alert(`${this.data.currencyPair} is not valid only USDINR is supported`);
+    }
     this.confirmBookingService.onSubmitBook(this.data).subscribe(
       (data: any) => {
         this.currentTradeId = data.trade.tradeNo;
+
         alert('sucess,please confirm your trade');
+        this.displayBtn = true;
+        this.isHidden = false;
       },
       (error) => alert('Cannot Book trade')
     );

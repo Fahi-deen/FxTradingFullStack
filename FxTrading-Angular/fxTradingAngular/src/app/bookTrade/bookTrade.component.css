@@ -87,19 +87,43 @@ body{
 	width: 110px;
 	height: 35px;
 	background: #ff6600;
+  font-size: 12px;
 	text-transform: uppercase;
   cursor: pointer;
   position: relative;
-  margin: 50px 20px 50px;
+  margin: 15px 3px 50px 50px;
 }
-.bottom-options{
+#print-btn{
+  float: right;
+	border: none;
+	color: white;
+  font-size: 12px;
+	width: 110px;
+	height: 36px;
+	background: #ff6600;
+	text-transform: uppercase;
+  cursor: pointer;
+  position: relative;
+  margin: -21px 3px 50px;
+}
+.bottom-options > button {
   float: left;
-  background: #ff6600;
-  margin: 5px;
-  padding-right: 15px;
+	border: none;
+	color: white;
+  width: 110px;
+	height: 35px;
+  font-size: 11px;
+	background: #ff6600;
+	text-transform: uppercase;
+  cursor: pointer;
+  position: relative;
+  margin: 5px 5px 2px 70px;
+
 }
+
 .bottom-text{
   text-align:center;
+  width: 100%;
   vertical-align:middle;
   margin-top: 10px;
   color: yellow;
