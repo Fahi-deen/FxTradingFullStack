@@ -23,9 +23,9 @@ public class BookTradeServiceImpl implements TradeService {
 		CurrencypairChecker(data);
 		TradingDataModel model = tradingDataRepository.save(data);
 		String printRate, bookTrade, CancelTrade;
-		printRate = "http://localhos t:8080/printrate";
-		bookTrade = "http://localhost:8080/confirmtrade";
-		CancelTrade = "http://localhost:8080/canceltrade";
+		printRate = "http://localhos t:8080/printrate/{tradeNo}";
+		bookTrade = "http://localhost:8080/confirmtrade/{tradeNo}";
+		CancelTrade = "http://localhost:8080/canceltrade/{tradeNo}";
 
 		LinkedHashMap<String, Object> map = new LinkedHashMap<>();
 		map.put("trade", model);
@@ -82,20 +82,7 @@ public class BookTradeServiceImpl implements TradeService {
 		return displayAmount;
 	}
 
-	@Override
-	public LinkedHashMap<String, String> homepage() {
 
-		String bookTrade, printTrade, exitTrade;
-		bookTrade = "http://localhost:8080/booktrade";
-		printTrade = "http://localhost:8080/printtrade";
-		exitTrade = "link http://localhost:8080/exit";
-		LinkedHashMap<String, String> map = new LinkedHashMap<>();
-		map.put("To Book Trade click here", bookTrade);
-		map.put("To Print Trade click here", printTrade);
-		map.put("To exit click here", exitTrade);
-
-		return map;
-	}
 
 	@Override
 	public String confirmTrade(Long id) {

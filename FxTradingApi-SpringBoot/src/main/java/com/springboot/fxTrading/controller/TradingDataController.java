@@ -23,12 +23,6 @@ public class TradingDataController {
 	@Autowired
 	private TradeService tradeService;
 
-	@GetMapping("/index")
-	public LinkedHashMap<String, String> homePage() {
-
-		return tradeService.homepage();
-	}
-
 	@PostMapping("/booktrade")
 	public LinkedHashMap<String, Object> bookTrades(@RequestBody TradingDataModel data) {
 
@@ -36,8 +30,8 @@ public class TradingDataController {
 	}
 
 	@PutMapping("/confirmtrade/{id}")
-	public HashMap<String,String> confirmTrades(@PathVariable(name = "id") Long id) {
-		HashMap<String, String> map=new HashMap<>();
+	public HashMap<String, String> confirmTrades(@PathVariable(name = "id") Long id) {
+		HashMap<String, String> map = new HashMap<>();
 		map.put("msg", tradeService.confirmTrade(id));
 		return map;
 	}

@@ -3,12 +3,9 @@ package com.springboot.fxTrading.service;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import org.springframework.boot.configurationprocessor.json.JSONObject;
-
 import com.springboot.fxTrading.model.TradingDataModel;
 
 public interface TradeService {
-	LinkedHashMap<String, String> homepage();
 
 	LinkedHashMap<String, Object> bookTrade(TradingDataModel data);
 
@@ -26,6 +23,6 @@ public interface TradeService {
 
 	String confirmTrade(Long id);
 
-	LinkedHashMap<String,Object> cancelTrades(Long id);
+	LinkedHashMap<String, Object> cancelTrades(Long id);
 
 }
