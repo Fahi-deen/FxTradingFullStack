@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <form (ngSubmit)="onConfirmBook()" ngNativeValidate>
+        <!--First name-->
+        <div class="box">
+          <label for="CustomerName" class="fl fontLabel"> CustomerName: </label>
+          <div class="new iconBox">
+            <i class="fa fa-user" aria-hidden="true"></i>
+          </div>
+          <div class="fr">
+            <input type="text" name="customerName" placeholder="Enter customer Name" class="textBox" autofocus="on"
+              [(ngModel)]="data.customerName" required>
+          </div>
+          <div class="clr"></div>
+        </div>
+        <div class="box">
+          <label for="CurrencyPairs" class="fl fontLabel">CurrencyPairs: </label>
+          <div class="fl iconBox"><i class="fa fa-money" aria-hidden="true"></i>
+          </div>
+          <div class="fr">
+
+
+            <select [(ngModel)]="data.currencyPair" name="currrencyPair" class="selectPair">
+              <optgroup>
+                <option selected disabled style="font-weight: bolder ;">Currency Pair
+                  Available</option>
+                <option *ngFor="let o of options ">
+                  {{o.name}}
+                </option>
+              </optgroup>
+            </select>
+          </div>
+          <div class=" clr">
+          </div>
+        </div>
+
+        <div class="box">
+          <label for="Amount" class="fl fontLabel"> Amount: </label>
+          <div class="new iconBox">
+            <i class="fa fa-inr" aria-hidden="true"></i>
+          </div>
+          <div class="fr">
+            <input type="number" name="amount" placeholder="Enter amount to transfer" class="textBox" autofocus="on"
+              min="1" oninput="validity.valid||(value='');" [(ngModel)]="data.amount" required>
+          </div>
+          <div class="clr"></div>
+        </div>
+
+
+        <p class="bottom-text">{{displayMsg}}</p>
+
+        <div class="box">
+          <button name="Submit" class="submit" [hidden]="displayBtn">SUBMIT</button>
+        </div>
+
+
+      </form>
+
+      <button id="print-btn" (click)="onPrint()" [hidden]="displayBtn">Get Rate</button>
+      <div class=" bottom-options">
+        <button (click)="onConfirmedTrade() " *ngIf="!isHidden">Confirm Trade</button>
+        <button (click)="onCancelledTrade() " *ngIf="!isHidden">Cancel Trade</button>
+      </div>
+
+    </div>
+
+  </body>
+
+  </html>
+
+</body>
+
+</html>

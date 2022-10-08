@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~ngx-toastr/toastr";
+.ngx-pagination {
+  text-align: center;
+  margin-top: 50px;
+}
+.ngx-pagination :hover,
+.btn-info {
+  /* transform: translateX(3px); */
+  background: rebeccapurple !important;
+
+  border-radius: 20px !important;
+}
+.ngx-pagination .current,
+.btn-info {
+  background: #17a2b8 !important;
+
+  border: transparent !important;
+  border-radius: 20px !important;
+}
+
+.ngx-pagination .current:hover {
+  background: #17a2b8 !important;
+  border-radius: 20px !important;
+  border: transparent !important;
+}

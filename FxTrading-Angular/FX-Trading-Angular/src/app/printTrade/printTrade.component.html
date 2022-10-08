@@ -1,0 +1,37 @@
+<body>
+  <div class="fluid-container">
+    <h2 class="text-center" style="margin-top: 30PX;">Trading Data</h2>
+    <select (change)="onTableSizeChange($event)">
+      <option *ngFor="let size of tableSizes">{{size}}</option>
+
+    </select>
+    <table class=" table table-striped" style="background-color: white; ">
+      <thead>
+        <th>Trade no</th>
+        <th> customerName</th>
+        <th> currencyPair</th>
+        <th> Amount </th>
+        <th> Rate </th>
+        <!-- <th>Status</th> -->
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of datas | paginate:{
+        itemsPerPage:tableSize,
+        currentPage:page,
+        totalItems:count
+      }; let i =index ">
+          <td> {{ data.tradeNo}}</td>
+          <td> {{ data.customerName}}</td>
+          <td> {{ data.currencyPair }}</td>
+          <td> {{data.amount}}</td>
+          <td> {{data.rate}}</td>
+          <!-- <td>{{data.status}}</td> -->
+        </tr>
+      </tbody>
+    </table>
+
+    <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+    </pagination-controls>
+
+  </div>
+</body>
