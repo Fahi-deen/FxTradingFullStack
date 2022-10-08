@@ -26,7 +26,7 @@ class FxTradingApiApplicationTests {
 	@Test
 //	@Order(1)
 	public void testBookTrade() {
-		TradingDataModel book = TradingDataModel.builder().customerName("Test Fahi").currencyPair("USDINR").amount(1000).status("processing").build();
+		TradingDataModel book = TradingDataModel.builder().customerName("Test Fahi").rate(66.0f).currencyPair("USDINR").amount(1000).status("processing").build();
 		testTradeService.bookTrade(book);
 		testTradeService.printTrade();
 		System.out.println(testTradeService.printTrade());

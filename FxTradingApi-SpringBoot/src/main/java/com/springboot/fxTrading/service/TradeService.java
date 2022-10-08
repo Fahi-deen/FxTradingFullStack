@@ -14,17 +14,17 @@ public interface TradeService {
 
 	List<TradingDataModel> printTrade();
 
-	String getRate();
+	String getRate(Long id);
 
-	String cancelTrade();
+	String cancelTrade(Long id);
 
-	void amountCalculator();
+	void amountCalculator(TradingDataModel data);
 
-	void CurrencypairChecker();
+	void CurrencypairChecker(TradingDataModel data);
 
-	String displayAmount();
+	String displayAmount(TradingDataModel data);
 
-	LinkedHashMap<String, Object> confirmTrade(Long id);
+	String confirmTrade(Long id);
 
 	LinkedHashMap<String,Object> cancelTrades(Long id);
 

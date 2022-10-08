@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.springboot.fxTrading.model.TradingDataModel;
@@ -17,18 +16,16 @@ import com.springboot.fxTrading.service.TradeService;
 public class BookTradeServiceImpl implements TradeService {
 	@Autowired
 	private TradingDataRepository tradingDataRepository;
-	private TradingDataModel data;
 
 	@Override
 	public LinkedHashMap<String, Object> bookTrade(TradingDataModel data) {
-		this.data = data;
-		amountCalculator();
-		CurrencypairChecker();
+		amountCalculator(data);
+		CurrencypairChecker(data);
 		TradingDataModel model = tradingDataRepository.save(data);
 		String printRate, bookTrade, CancelTrade;
-		printRate = "http://localhost:8082/printrate";
-		bookTrade = "http://localhost:8082/confirmtrade";
-		CancelTrade = "http://localhost:8082/canceltrade";
+		printRate = "http://localhos t:8080/printrate";
+		bookTrade = "http://localhost:8080/confirmtrade";
+		CancelTrade = "http://localhost:8080/canceltrade";
 
 		LinkedHashMap<String, Object> map = new LinkedHashMap<>();
 		map.put("trade", model);
@@ -43,24 +40,23 @@ public class BookTradeServiceImpl implements TradeService {
 		return tradingDataRepository.findAll();
 	}
 
-	
-
 	@Override
-	public String cancelTrade() {
-		tradingDataRepository.delete(data);
+	public String cancelTrade(Long id) {
+		tradingDataRepository.deleteById(id);
 		return "Trade is Canceled..";
 	}
 
 	@Override
-	public String getRate() {
+	public String getRate(Long id) {
+		TradingDataModel currentTrade=tradingDataRepository.findById(id).get();
 		String rate;
-		rate = "You are transferring INR " + displayAmount() + " to " + data.getCustomerName();
+		rate = "You are transferring INR " + displayAmount(currentTrade) + " to " + currentTrade.getCustomerName();
 		return rate;
 
 	}
 
 	@Override
-	public void amountCalculator() {
+	public void amountCalculator(TradingDataModel data) {
 		if (data.getAmount() <= 0) {
 			throw new IllegalArgumentException("Cannot accept value " + data.getAmount() + " Enter positive value");
 		} else {
@@ -70,7 +66,7 @@ public class BookTradeServiceImpl implements TradeService {
 	}
 
 	@Override
-	public void CurrencypairChecker() {
+	public void CurrencypairChecker(TradingDataModel data) {
 		if (data.getCurrencyPair().toUpperCase().equals("USDINR")) {
 			data.setCurrencyPair("USDINR");
 		} else {
@@ -80,7 +76,7 @@ public class BookTradeServiceImpl implements TradeService {
 	}
 
 	@Override
-	public String displayAmount() {
+	public String displayAmount(TradingDataModel data) {
 		NumberFormat nf = NumberFormat.getInstance(new Locale("en", "IN"));
 		String displayAmount = nf.format(data.getAmount()).trim();
 		return displayAmount;
@@ -90,9 +86,9 @@ public class BookTradeServiceImpl implements TradeService {
 	public LinkedHashMap<String, String> homepage() {
 
 		String bookTrade, printTrade, exitTrade;
-		bookTrade = "http://localhost:8082/booktrade";
-		printTrade = "http://localhost:8082/printtrade";
-		exitTrade = "link http://localhost:8082/exit";
+		bookTrade = "http://localhost:8080/booktrade";
+		printTrade = "http://localhost:8080/printtrade";
+		exitTrade = "link http://localhost:8080/exit";
 		LinkedHashMap<String, String> map = new LinkedHashMap<>();
 		map.put("To Book Trade click here", bookTrade);
 		map.put("To Print Trade click here", printTrade);
@@ -102,30 +98,29 @@ public class BookTradeServiceImpl implements TradeService {
 	}
 
 	@Override
-	public LinkedHashMap<String, Object> confirmTrade(Long id) {
+	public String confirmTrade(Long id) {
+		
 		TradingDataModel trade = tradingDataRepository.findById(id).get();
+		if(trade.getStatus().trim().equals("Booked"))
+			return "Your Trade is Already Booked";
 		trade.setStatus("Booked");
-		TradingDataModel datas = tradingDataRepository.save(trade);
-		NumberFormat nf = NumberFormat.getInstance(new Locale("en", "IN"));
-		String displayAmount = nf.format(trade.getAmount()).trim();
-		String msg = "Trade for " + datas.getCurrencyPair() + " has been booked with rate " + datas.getRate() + " , "
-				+ "The amount of Rs " + displayAmount + " will  be transferred in 2 working days to "
-				+ datas.getCustomerName() ;
-		LinkedHashMap<String, Object> map=new LinkedHashMap<>();
-		map.put("trade_detail", trade);
-		map.put("msg", msg);
-		return map;
+		TradingDataModel bookedTrade = tradingDataRepository.save(trade);
+
+		String msg = "Trade for " + bookedTrade.getCurrencyPair() + " has been booked with rate " + bookedTrade.getRate() + " , "
+				+ "The amount of Rs " + displayAmount(trade) + " will  be transferred in 2 working days to "
+				+ bookedTrade.getCustomerName();
+		return msg;
 
 	}
 
 	@Override
-	public LinkedHashMap<String,Object> cancelTrades(Long id) {
+	public LinkedHashMap<String, Object> cancelTrades(Long id) {
 		TradingDataModel trade = tradingDataRepository.findById(id).get();
 		trade.setStatus("Cancelled");
 		tradingDataRepository.delete(trade);
-		LinkedHashMap<String,Object> map=new LinkedHashMap<>();
-	    map.put("details", trade);
-        map.put("msg", "Trade is Cancelled");
+		LinkedHashMap<String, Object> map = new LinkedHashMap<>();
+		map.put("details", trade);
+		map.put("msg", "Trade is Cancelled");
 		return map;
 	}
 
