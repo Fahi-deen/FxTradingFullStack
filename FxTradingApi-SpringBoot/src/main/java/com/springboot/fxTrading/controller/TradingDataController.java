@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,7 +26,7 @@ public class TradingDataController {
 	private TradeService tradeService;
 
 	@PostMapping("/booktrade")
-	public LinkedHashMap<String, Object> bookTrades(@RequestBody TradingDataModel data) {
+	public LinkedHashMap<String, Object> bookTrades(@Valid @RequestBody TradingDataModel data) {
 
 		return new LinkedHashMap<String, Object>(tradeService.bookTrade(data));
 	}

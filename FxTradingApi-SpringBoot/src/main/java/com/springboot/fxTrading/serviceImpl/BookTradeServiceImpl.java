@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +21,7 @@ public class BookTradeServiceImpl implements TradeService {
 	private TradingDataRepository tradingDataRepository;
 
 	@Override
-	public LinkedHashMap<String, Object> bookTrade(TradingDataModel data) {
+	public LinkedHashMap<String, Object> bookTrade( TradingDataModel data) {
 		amountCalculator(data);
 		CurrencypairChecker(data);
 		TradingDataModel model = tradingDataRepository.save(data);
