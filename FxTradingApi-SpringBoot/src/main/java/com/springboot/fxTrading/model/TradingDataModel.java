@@ -26,7 +26,7 @@ public class TradingDataModel {
 	private String customerName;
 	private String currencyPair;
 	private double amount;
-	private float rate=66.0f;
-	private String status="processing";
-	
+	private float rate = 66.0f;
+	private String status = "processing";
+
 }

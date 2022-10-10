@@ -8,6 +8,7 @@ import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.springboot.fxTrading.exception.ResourceNotFoundException;
 import com.springboot.fxTrading.model.TradingDataModel;
 import com.springboot.fxTrading.repository.TradingDataRepository;
 import com.springboot.fxTrading.service.TradeService;
@@ -42,13 +43,16 @@ public class BookTradeServiceImpl implements TradeService {
 
 	@Override
 	public String cancelTrade(Long id) {
+		
+		TradingDataModel NotExistingTrade= tradingDataRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with id :" + id));
 		tradingDataRepository.deleteById(id);
 		return "Trade is Canceled..";
+		
 	}
 
 	@Override
 	public String getRate(Long id) {
-		TradingDataModel currentTrade=tradingDataRepository.findById(id).get();
+		TradingDataModel currentTrade = tradingDataRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with id :" + id));
 		String rate;
 		rate = "You are transferring INR " + displayAmount(currentTrade) + " to " + currentTrade.getCustomerName();
 		return rate;
@@ -82,27 +86,26 @@ public class BookTradeServiceImpl implements TradeService {
 		return displayAmount;
 	}
 
-
-
 	@Override
 	public String confirmTrade(Long id) {
-		
+
 		TradingDataModel trade = tradingDataRepository.findById(id).get();
-		if(trade.getStatus().trim().equals("Booked"))
+		if (trade.getStatus().trim().equals("Booked"))
 			return "Your Trade is Already Booked";
 		trade.setStatus("Booked");
 		TradingDataModel bookedTrade = tradingDataRepository.save(trade);
 
-		String msg = "Trade for " + bookedTrade.getCurrencyPair() + " has been booked with rate " + bookedTrade.getRate() + " , "
-				+ "The amount of Rs " + displayAmount(trade) + " will  be transferred in 2 working days to "
-				+ bookedTrade.getCustomerName();
+		String msg = "Trade for " + bookedTrade.getCurrencyPair() + " has been booked with rate "
+				+ bookedTrade.getRate() + " , " + "The amount of Rs " + displayAmount(trade)
+				+ " will  be transferred in 2 working days to " + bookedTrade.getCustomerName();
 		return msg;
 
 	}
 
 	@Override
 	public LinkedHashMap<String, Object> cancelTrades(Long id) {
-		TradingDataModel trade = tradingDataRepository.findById(id).get();
+		System.out.println("jdj");
+		TradingDataModel trade = tradingDataRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with id :" + id));
 		trade.setStatus("Cancelled");
 		tradingDataRepository.delete(trade);
 		LinkedHashMap<String, Object> map = new LinkedHashMap<>();
