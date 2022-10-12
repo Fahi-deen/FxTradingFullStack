@@ -29,8 +29,8 @@
             <i class="fa fa-user" aria-hidden="true"></i>
           </div>
           <div class="fr">
-            <input type="text" name="customerName" placeholder="Enter customer Name" class="textBox" autofocus="on"
-              [(ngModel)]="data.customerName" required>
+            <input type="text" name="customerName" pattern="[A-Za-z ]{1,32}" placeholder="Enter customer Name"
+              class="textBox" autofocus="on" [(ngModel)]="data.customerName" required>
           </div>
           <div class="clr"></div>
         </div>
